@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management API Tester</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .status {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .status.running {
+            color: #27ae60;
+        }
+        
+        .status.offline {
+            color: #e74c3c;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 18px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        button {
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #764ba2;
+        }
+        
+        button:active {
+            transform: scale(0.98);
+        }
+        
+        .response-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #333;
+        }
+        
+        .response-box.success {
+            border-left: 4px solid #27ae60;
+            background: #f0fdf4;
+        }
+        
+        .response-box.error {
+            border-left: 4px solid #e74c3c;
+            background: #fef2f2;
+            color: #c0392b;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .info-box h3 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+        
+        .info-box p {
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Employee Management API Tester</h1>
+        <div class="status running" id="status">✓ Server is running on http://localhost:8080</div>
+        
+        <div class="info-box">
+            <h3>📋 Quick Guide</h3>
+            <p><strong>Server URL:</strong> <code>http://localhost:8080</code></p>
+            <p><strong>Database:</strong> H2 In-Memory Database</p>
+            <p><strong>H2 Console:</strong> <code>http://localhost:8080/h2-console</code></p>
+        </div>
+        
+        <!-- Save Employee Section -->
+        <div class="section">
+            <h2>1️⃣ Save Employee (POST)</h2>
+            <p style="margin-bottom: 15px; color: #666;">Add a new employee to the database</p>
+            <div class="form-group">
+                <label for="name">Employee Name</label>
+                <input type="text" id="name" placeholder="e.g., John Doe">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="e.g., john@example.com">
+            </div>
+            <div class="form-group">
+                <label for="salary">Salary</label>
+                <input type="number" id="salary" placeholder="e.g., 50000" step="0.01">
+            </div>
+            <button onclick="saveEmployee()">Save Employee</button>
+            <div class="response-box" id="saveResponse" style="display: none;"></div>
+        </div>
+        
+        <!-- Get All Employees Section -->
+        <div class="section">
+            <h2>2️⃣ Get All Employees (GET)</h2>
+            <p style="margin-bottom: 15px; color: #666;">Retrieve all employees from the database</p>
+            <button onclick="getEmployees()">Get All Employees</button>
+            <div class="response-box" id="getResponse" style="display: none;"></div>
+        </div>
+        
+        <!-- Delete Employee Section -->
+        <div class="section">
+            <h2>3️⃣ Delete Employee (DELETE)</h2>
+            <p style="margin-bottom: 15px; color: #666;">Delete an employee by ID</p>
+            <div class="form-group">
+                <label for="deleteId">Employee ID</label>
+                <input type="number" id="deleteId" placeholder="e.g., 1">
+            </div>
+            <button onclick="deleteEmployee()">Delete Employee</button>
+            <div class="response-box" id="deleteResponse" style="display: none;"></div>
+        </div>
+        
+        <!-- H2 Database Console Info -->
+        <div class="section">
+            <h2>💾 H2 Database Console</h2>
+            <p style="margin-bottom: 15px; color: #666;">Access the H2 database console to view and manage data directly</p>
+            <div class="info-box">
+                <h3>Connection Details:</h3>
+                <p><strong>URL:</strong> <code>http://localhost:8080/h2-console</code></p>
+                <p><strong>Driver Class:</strong> <code>org.h2.Driver</code></p>
+                <p><strong>JDBC URL:</strong> <code>jdbc:h2:mem:testdb</code></p>
+                <p><strong>User Name:</strong> <code>sa</code></p>
+                <p><strong>Password:</strong> <em>(leave empty)</em></p>
+                <p style="margin-top: 10px; color: #27ae60; font-weight: bold;">✓ H2 Console is now ENABLED</p>
+            </div>
+            <button onclick="openH2Console()" style="margin-top: 10px;">Open H2 Console</button>
+        </div>
+        
+        <!-- API Documentation -->
+        <div class="section">
+            <h2>📖 API Documentation</h2>
+            <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
+                <h3 style="color: #333; margin-bottom: 10px;">Available Endpoints:</h3>
+                <p><strong>POST</strong> <code>/employee/save</code> - Save a new employee</p>
+                <p><strong>GET</strong> <code>/employee/all</code> - Get all employees</p>
+                <p><strong>DELETE</strong> <code>/employee/delete/{id}</code> - Delete employee by ID</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const API_URL = 'http://localhost:8080/employee';
+        
+        function checkServerStatus() {
+            fetch(`${API_URL}/all`)
+                .then(response => {
+                    document.getElementById('status').classList.add('running');
+                    document.getElementById('status').classList.remove('offline');
+                })
+                .catch(error => {
+                    document.getElementById('status').classList.remove('running');
+                    document.getElementById('status').classList.add('offline');
+                    document.getElementById('status').textContent = '✗ Server is offline';
+                });
+        }
+        
+        function saveEmployee() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const salary = document.getElementById('salary').value;
+            
+            if (!name || !email || !salary) {
+                showResponse('saveResponse', 'Please fill all fields', false);
+                return;
+            }
+            
+            const data = { name, email, salary: parseFloat(salary) };
+            
+            fetch(`${API_URL}/save`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => Promise.reject(text));
+                }
+                return response.json();
+            })
+            .then(data => {
+                showResponse('saveResponse', JSON.stringify(data, null, 2), true);
+                document.getElementById('name').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('salary').value = '';
+            })
+            .catch(error => showResponse('saveResponse', `Error: ${error}`, false));
+        }
+        
+        function getEmployees() {
+            fetch(`${API_URL}/all`)
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(text => Promise.reject(text));
+                    }
+                    return response.json();
+                })
+                .then(data => showResponse('getResponse', JSON.stringify(data, null, 2), true))
+                .catch(error => showResponse('getResponse', `Error: ${error}`, false));
+        }
+        
+        function deleteEmployee() {
+            const id = document.getElementById('deleteId').value;
+            
+            if (!id) {
+                showResponse('deleteResponse', 'Please enter Employee ID', false);
+                return;
+            }
+            
+            fetch(`${API_URL}/delete/${id}`, { method: 'DELETE' })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(text => Promise.reject(text));
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    showResponse('deleteResponse', data, true);
+                    document.getElementById('deleteId').value = '';
+                })
+                .catch(error => showResponse('deleteResponse', `Error: ${error}`, false));
+        }
+        
+        function showResponse(elementId, content, isSuccess) {
+            const element = document.getElementById(elementId);
+            element.textContent = content;
+            element.style.display = 'block';
+            element.className = `response-box ${isSuccess ? 'success' : 'error'}`;
+        }
+        
+        function openH2Console() {
+            window.open('http://localhost:8080/h2-console', '_blank');
+        }
+        
+        // Check server status on page load
+        checkServerStatus();
+        setInterval(checkServerStatus, 5000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+{
+  "info": {
+    "_postman_id": "employee-management-api",
+    "name": "Employee Management API",
+    "description": "Collection for testing Employee Management REST API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Save Employee",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"salary\": 50000.00\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/employee/save",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["employee", "save"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Employees",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/employee/all",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["employee", "all"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Employee",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/employee/delete/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["employee", "delete", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Save Employee - Alice",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Alice Johnson\",\n  \"email\": \"alice@company.com\",\n  \"salary\": 75000.00\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/employee/save",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["employee", "save"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Save Employee - Bob",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Bob Wilson\",\n  \"email\": \"bob@company.com\",\n  \"salary\": 65000.00\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/employee/save",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["employee", "save"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Save Employee - Charlie",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Charlie Brown\",\n  \"email\": \"charlie@company.com\",\n  \"salary\": 55000.00\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/employee/save",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["employee", "save"]
+        }
+      },
+      "response": []
+    }
+  ]
+}

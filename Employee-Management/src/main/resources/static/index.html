@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-users-cog"></i> Employee Core</h1>
+            <p class="subtitle">Secure • Fast • Reliable</p>
+        </header>
+
+        <div class="dashboard-grid">
+            <!-- Add Employee Form -->
+            <div class="glass-panel form-panel">
+                <div class="employee-list-header">
+                    <h2>Add Member</h2>
+                </div>
+                <form id="addEmployeeForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" placeholder="Ex: John Doe" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="john@example.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="salary">Annual Salary ($)</label>
+                        <input type="number" id="salary" placeholder="50000" required>
+                    </div>
+
+                    <button type="submit">
+                        <i class="fas fa-plus-circle"></i> Create Profile
+                    </button>
+                </form>
+            </div>
+
+            <!-- Employee List -->
+            <div class="glass-panel list-panel">
+                <div class="employee-list-header">
+                    <h2>Team Directory</h2>
+                    <span id="count-badge" style="background:var(--accent-color); padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; color: #000; font-weight: bold;">0</span>
+                </div>
+                <div id="employee-list" class="employee-cards">
+                    <div class="loading">Loading data...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
